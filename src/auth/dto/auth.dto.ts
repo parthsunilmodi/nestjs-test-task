@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class AuthDto {
   @ApiProperty({
     description: 'Enter your username',
-    default: 'yash',
+    default: 'test',
   })
   username: string;
   @ApiProperty({

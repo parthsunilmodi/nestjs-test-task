@@ -2,12 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateUserDto {
   @ApiProperty({
     description: 'Enter your name',
-    default: 'yash',
+    default: 'test',
   })
   name: string;
   @ApiProperty({
     description: 'Enter your username',
-    default: 'yash',
+    default: 'test',
   })
   username: string;
   @ApiProperty({

@@ -1,13 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
+
+export interface Books {
+  bookId: string;
+  quantity: number;
+  points: number;
+}
+
+export class BookDto {
+  @ApiProperty({
+    description: 'Enter your BookId',
+  })
+  public bookId: string;
+  @ApiProperty({
+    description: 'Enter your quantity',
+  })
+  public quantity: number;
+}
+
 export class CreateOrderDto {
   @ApiProperty({
     description: 'Enter your BookId',
-    default: 1,
+    type: [BookDto],
+    isArray: true,
   })
-  bookId: string;
-  @ApiProperty({
-    description: 'Enter your username',
-    default: 1,
-  })
-  quantity: number;
+  books: Books[];
 }
