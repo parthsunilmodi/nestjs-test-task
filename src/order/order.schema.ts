@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Book } from '../book/book.schema';
 import { User } from '../users/user.schema';
+import { Book } from '../book/book.schema';
 
 export type OrderDocument = Order & Document;
-export type BookDocument = Book & Document;
+export type BooksDocument = Books & Document;
 
 @Schema({ versionKey: false })
 export class Books {

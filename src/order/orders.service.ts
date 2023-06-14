@@ -43,7 +43,8 @@ export class OrdersService {
     );
 
     const bookData = books.reduce((previousValue: any, currentValue: any) => {
-      return { ...previousValue, [currentValue._id]: currentValue };
+      const { _id, ...data } = currentValue;
+      return { ...previousValue, [currentValue._id]: data._doc };
     }, {});
 
     const totalPoint = createOrderDto.books.reduce(
@@ -74,6 +75,7 @@ export class OrdersService {
       books: requestBook,
       total: totalPoint,
     });
+
     const response = await order.save();
     await this.usersService.updateWithField(
       userId,
