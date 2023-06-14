@@ -95,6 +95,7 @@ export class OrdersService {
           populate: { path: 'books' },
         },
       ])
+      .sort({ _id: 1 })
       .limit(limit)
       .skip((page - 1) * limit);
   }
