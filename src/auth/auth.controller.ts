@@ -28,12 +28,13 @@ export class AuthController {
   logout(@Req() req: Request) {
     this.authService.logout(req.user['sub']);
   }
-  @ApiBearerAuth('access-token')
-  @UseGuards(RefreshTokenGuard)
-  @Get('refresh')
-  refreshTokens(@Req() req: Request) {
-    const userId = req.user['sub'];
-    const refreshToken = req.user['refreshToken'];
-    return this.authService.refreshTokens(userId, refreshToken);
-  }
+  // @ApiBearerAuth('access-token')
+  // @UseGuards(RefreshTokenGuard)
+  // @Get('refresh')
+  // refreshTokens(@Req() req: Request) {
+  //   const userId = req.user['sub'];
+  //   console.log(userId);
+  //   const refreshToken = req.user['refreshToken'];
+  //   return this.authService.refreshTokens(userId, refreshToken);
+  // }
 }

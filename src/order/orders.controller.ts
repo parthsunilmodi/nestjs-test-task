@@ -5,7 +5,7 @@ import { OrdersService } from './orders.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { OrderDocument } from './order.schema';
 import { Request } from 'express';
-import { ApiImplicitQuery } from "@nestjs/swagger/dist/decorators/api-implicit-query.decorator";
+import { ApiImplicitQuery } from '@nestjs/swagger/dist/decorators/api-implicit-query.decorator';
 
 @Controller('orders')
 export class OrdersController {

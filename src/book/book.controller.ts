@@ -7,12 +7,12 @@ import { ApiImplicitQuery } from '@nestjs/swagger/dist/decorators/api-implicit-q
 @Controller('books')
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
-  @ApiBearerAuth('access-token')
-  @UseGuards(AccessTokenGuard)
-  @Post()
-  create() {
-    return this.booksService.create();
-  }
+  // @ApiBearerAuth('access-token')
+  // @UseGuards(AccessTokenGuard)
+  // @Post()
+  // create() {
+  //   return this.booksService.create();
+  // }
   @ApiBearerAuth('access-token')
   @UseGuards(AccessTokenGuard)
   @ApiImplicitQuery({
