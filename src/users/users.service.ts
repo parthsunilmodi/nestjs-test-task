@@ -14,12 +14,8 @@ export class UsersService {
     return createdUser.save();
   }
 
-  async findAll(): Promise<UserDocument[]> {
-    return this.userModel.find().exec();
-  }
-
   async findById(id: string): Promise<UserDocument> {
-    return this.userModel.findById(id);
+    return this.userModel.findById(id).select('-password');
   }
 
   async findByUsername(username: string): Promise<UserDocument> {
@@ -33,10 +29,6 @@ export class UsersService {
     return this.userModel
       .findByIdAndUpdate(id, updateUserDto, { new: true })
       .exec();
-  }
-
-  async remove(id: string): Promise<UserDocument> {
-    return this.userModel.findByIdAndDelete(id).exec();
   }
 
   async getUserPoint(id: string): Promise<number> {
