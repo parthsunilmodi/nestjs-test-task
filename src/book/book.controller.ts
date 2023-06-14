@@ -25,8 +25,17 @@ export class BooksController {
     required: true,
     type: Number,
   })
+  @ApiImplicitQuery({
+    name: 'search',
+    required: false,
+    type: String,
+  })
   @Get('')
-  get(@Query() query: { limit: number; page: number }) {
-    return this.booksService.pagination(query.page || 1, query.limit || 10);
+  get(@Query() query: { limit: number; page: number; search: string | null }) {
+    return this.booksService.pagination(
+      query.page || 1,
+      query.limit || 10,
+      query.search || '',
+    );
   }
 }

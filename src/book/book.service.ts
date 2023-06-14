@@ -1,7 +1,8 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { Book, BookDocument } from "./book.schema";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Book, BookDocument } from './book.schema';
+import { isNumber } from '@nestjs/common/utils/shared.utils';
 
 @Injectable()
 export class BooksService {
@@ -13,15 +14,30 @@ export class BooksService {
       const writer = (Math.random() + 1).toString(36).substring(7);
       const createdUser = new this.bookModel({
         title,
-        writer
+        writer,
       });
       await createdUser.save();
     });
   }
 
-  async pagination(page, limit): Promise<BookDocument[]> {
+  async pagination(page, limit, search): Promise<BookDocument[]> {
+    const searchRegExp = new RegExp(search, 'i');
+    const filter = [
+      {
+        writer: { $regex: searchRegExp },
+      },
+      {
+        title: { $regex: searchRegExp },
+      },
+      {
+        tag: { $regex: searchRegExp },
+      },
+    ];
+
     return this.bookModel
-      .find()
+      .find({
+        $or: filter,
+      })
       .limit(limit)
       .skip((page - 1) * limit);
   }
