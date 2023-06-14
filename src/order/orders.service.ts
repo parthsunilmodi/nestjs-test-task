@@ -76,9 +76,9 @@ export class OrdersService {
     return response;
   }
 
-  async findAll(page, limit): Promise<OrderDocument[]> {
+  async findAll(userId, page, limit): Promise<OrderDocument[]> {
     return this.orderModel
-      .find()
+      .find({ userId: { $in: userId } })
       .limit(limit)
       .skip((page - 1) * limit);
   }

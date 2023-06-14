@@ -40,7 +40,12 @@ export class OrdersController {
     type: Number,
   })
   @Get()
-  findAll(@Query() query: { limit: number; page: number }) {
-    return this.ordersService.findAll(query.page || 1, query.limit || 10);
+  findAll(@Query() query: { limit: number; page: number },@Req() req: Request) {
+    const userId = req.user['sub'];
+    return this.ordersService.findAll(
+      userId,
+      query.page || 1,
+      query.limit || 10,
+    );
   }
 }
