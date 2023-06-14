@@ -5,8 +5,7 @@ import { Book, BookDocument } from "./book.schema";
 
 @Injectable()
 export class BooksService {
-  constructor(@InjectModel(Book.name) private bookModel: Model<BookDocument>) {
-  }
+  constructor(@InjectModel(Book.name) private bookModel: Model<BookDocument>) {}
 
   async create(): Promise<any> {
     Array.from(Array(100)).map(async (_, i) => {
@@ -21,7 +20,6 @@ export class BooksService {
   }
 
   async pagination(page, limit): Promise<BookDocument[]> {
-    console.log(page, limit);
     return this.bookModel
       .find()
       .limit(limit)

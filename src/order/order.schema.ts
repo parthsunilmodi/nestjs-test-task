@@ -28,6 +28,9 @@ export class Order {
 
   @Prop({ default: 0 })
   total: number;
+
+  @Prop({ default: false })
+  isCancel: boolean;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

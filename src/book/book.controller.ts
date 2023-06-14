@@ -27,6 +27,6 @@ export class BooksController {
   })
   @Get('')
   get(@Query() query: { limit: number; page: number }) {
-    return this.booksService.pagination(query.page, query.limit);
+    return this.booksService.pagination(query.page || 1, query.limit || 10);
   }
 }

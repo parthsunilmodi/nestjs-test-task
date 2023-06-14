@@ -76,7 +76,30 @@ export class OrdersService {
     return response;
   }
 
-  async findAll(): Promise<OrderDocument[]> {
-    return this.orderModel.find().exec();
+  async findAll(page, limit): Promise<OrderDocument[]> {
+    return this.orderModel
+      .find()
+      .limit(limit)
+      .skip((page - 1) * limit);
+  }
+
+  async cancelOrder(userId: string, orderId: string): Promise<OrderDocument> {
+    const order = await this.orderModel.findOne({
+      _id: orderId,
+      isCancel: false,
+      userId,
+    });
+    if (!order) {
+      throw new NotFoundException('order not found!');
+    }
+    const userPoint = await this.usersService.getUserPoint(userId);
+    await this.usersService.updateWithField(
+      userId,
+      'points',
+      userPoint + order.total,
+    );
+    order.isCancel = true;
+    order.save();
+    return order;
   }
 }
