@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { BooksDocument, Order, OrderDocument } from './order.schema';
+import { Order, OrderDocument } from './order.schema';
 import { Books, CreateOrderDto } from './dto/create-order.dto';
 import { Book, BookDocument } from '../book/book.schema';
 import { BooksService } from '../book/book.service';
@@ -42,6 +42,10 @@ export class OrdersService {
       {},
     );
 
+    const bookData = books.reduce((previousValue: any, currentValue: any) => {
+      return { ...previousValue, [currentValue._id]: currentValue };
+    }, {});
+
     const totalPoint = createOrderDto.books.reduce(
       (previousValue: any, currentValue: Books) => {
         return (
@@ -58,7 +62,11 @@ export class OrdersService {
     }
 
     const requestBook = createOrderDto.books.map((book) => {
-      return { ...book, points: BookWithPoint[book.bookId] };
+      return {
+        ...bookData[book.bookId],
+        ...book,
+        points: BookWithPoint[book.bookId],
+      };
     });
 
     const order = new this.orderModel({
@@ -79,6 +87,12 @@ export class OrdersService {
   async findAll(userId, page, limit): Promise<OrderDocument[]> {
     return this.orderModel
       .find({ userId: { $in: userId } })
+      .populate([
+        {
+          path: 'books',
+          populate: { path: 'books' },
+        },
+      ])
       .limit(limit)
       .skip((page - 1) * limit);
   }
