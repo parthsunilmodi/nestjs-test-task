@@ -27,4 +27,12 @@ export class BooksService {
       .limit(limit)
       .skip((page - 1) * limit);
   }
+
+  async getBookCountUsingBooksId(booksId: string[]): Promise<number> {
+    return this.bookModel.find({ _id: { $in: booksId } }).count();
+  }
+
+  async getBookUsingBookId(booksId: string[]): Promise<BookDocument[]> {
+    return this.bookModel.find({ _id: { $in: booksId } });
+  }
 }

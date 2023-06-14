@@ -38,4 +38,17 @@ export class UsersService {
   async remove(id: string): Promise<UserDocument> {
     return this.userModel.findByIdAndDelete(id).exec();
   }
+
+  async getUserPoint(id: string): Promise<number> {
+    const user = await this.userModel.findById(id);
+    return user.points;
+  }
+
+  async updateWithField(
+    userId: string,
+    field: string,
+    value: string | number,
+  ): Promise<UserDocument> {
+    return this.userModel.findByIdAndUpdate(userId, { [field]: value });
+  }
 }

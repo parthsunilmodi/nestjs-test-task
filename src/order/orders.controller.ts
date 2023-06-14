@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Req } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { AccessTokenGuard } from 'src/common/guards/accessToken.guard';
 import { OrdersService } from './orders.service';
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('orders')
 export class OrdersController {
@@ -10,8 +10,9 @@ export class OrdersController {
   @ApiBearerAuth('access-token')
   @UseGuards(AccessTokenGuard)
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+  create(@Req() request, @Body() createOrderDto: CreateOrderDto) {
+    const userId: string = request.user.sub;
+    return this.ordersService.create(userId, createOrderDto);
   }
   @ApiBearerAuth('access-token')
   @UseGuards(AccessTokenGuard)
