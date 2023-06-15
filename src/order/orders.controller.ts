@@ -20,7 +20,7 @@ export class OrdersController {
 
   @ApiBearerAuth('access-token')
   @UseGuards(AccessTokenGuard)
-  @Get(':id')
+  @Get('/cancel/:id')
   cancelOrder(
     @Req() req: Request,
     @Param('id') id: string,
